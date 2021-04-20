@@ -1,23 +1,20 @@
 class Seat
 {
 	private:
-		int seatNumber;
+		char* seatNumber;
 		bool seatStatus;
 
 	public:
 		Seat();
-		Seat(int num, bool status);
+		Seat(char* num, bool status);
 		Seat(const Seat&);
 		
 		int getSeatNumber() const;
 		bool getSeatStatus() const;
 
-		void setSeatNumber(int num);
+		void setSeatNumber(char* num);
 		
-		Seat addSeat(const int num, const bool status);
-
-		
-		
+		Seat addSeat(const char* num, const bool status);		
 };
 
 class Hall
@@ -25,19 +22,15 @@ class Hall
 	private:
 		int hallNumber;
 		int numberOfRows;
-		int numberOfSeatsPerRow;
 		bool isHallBooked;
-		//add Seat seats[]
+		Seat* seats;
 
 	public:
 		Hall();
-		Hall(int num, int rows, int seats);
+		Hall(int num, int rows, Seat* seats);
 		Hall(const Hall &);
 
 		int getFreeSeats() const;
 		
 		bool isHallBooked() const;
-
-
-
 };
