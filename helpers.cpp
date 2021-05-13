@@ -1,6 +1,6 @@
 #ifndef helpers
 #define helpers
-
+#include <iostream>
 char * emptyAndCreateString(char * str, size_t len)
 {
     delete [] str;
@@ -31,7 +31,7 @@ size_t strlen ( const char * str )
 char * strcpy ( char * destination, const char * source )
 {
     size_t len = strlen ( source );
-    emptyAndCreateString(destination, len);
+    destination = emptyAndCreateString(destination, len);
 
         for( int i = 0; i < len; i++ )
         {

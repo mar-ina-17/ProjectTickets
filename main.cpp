@@ -1,14 +1,35 @@
 #include <iostream>
-#include "String.hpp"
+#include "String.h"
+#include "Vector.h"
+#include "Play.h"
+#include "Theatre.h"
+#include <ctime>
+#include <cstdlib>
 
 int main()
-{
-    String str1;
-    //String str2 = "hello";
+{    
+    Theatre te = Theatre();
+    te.generateHalls();
+    te.addEvent();
 
-   std::cin>>str1;
+    std::cout <<"-------------\n";
+   // te.buySeat();
+std::cout <<te;
 
-   //td::cout<<str1.compare(str2);
-   
+    /*//
+    //std::cout <<"-------------\n";
+    //te.freeSeats();
+    //std::cout <<te;
+    //te.unbookSeat();
+    std::cout <<"-------------\n";
+    te.freeSeats(); */
+
+   // Hall s = Hall();
+   // Seat s1 = Seat(12, true, "hdshdd", "hjsd");
+    //s1 = Seat(s);
+
+   // s = s1;
+   // std::cout <<s;
+
     return 0;
 }

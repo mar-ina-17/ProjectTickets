@@ -1,28 +1,28 @@
-#include "String.hpp"
+#include "String.h"
 #include "helpers.cpp"
 
 String::String()
 {
-    this->data = nullptr;
-    this->size = 0;
+    this->size = 1;
+	this->data = emptyAndCreateString(this->data, this->size);
 }
 
 String::String(const String& other)
 {
-    emptyAndCreateString(this->data, other.size);
+    this->data = emptyAndCreateString(this->data, other.size);
 
     this->size = other.size;
-    strcpy(this->data, other.data);
+    this->data = strcpy(this->data, other.data);
 }
 
 String& String::operator=(const String& other)
 {
     if(this != &other)
     {
-        emptyAndCreateString(this->data, other.size);
+        this->data = emptyAndCreateString(this->data, other.size);
 
         this->size = other.size;
-        strcpy(this->data, other.data);
+        this->data = strcpy(this->data, other.data);
         
     }
 
@@ -37,15 +37,15 @@ String::~String()
 String::String(size_t size)
 {
     this->size = size;
-    emptyAndCreateString(this->data, this->size);
+    this->data = emptyAndCreateString(this->data, this->size);
 }
 
 String::String(const char* data)
 {
     this->size = strlen(data);
-    emptyAndCreateString(this->data, this->size);
+    this->data = emptyAndCreateString(this->data, this->size);
 
-    strcpy(this->data, data);
+    this->data = strcpy(this->data, data);
 }
 
 String& String::concat(const String& other)
@@ -61,3 +61,32 @@ int String::compare(const String& other)
     return strcmp(this->data, other.data);
 }
 
+bool String::operator==(const String& other)
+{
+    bool result = false;
+    if(this->size == other.size)
+    {
+        for(int i = 0; i < this->size; i++)
+        {
+            if(this->data[i] == other.data[i]) result = true;
+            else return false;
+        }
+    }
+
+    return result;
+}
+
+size_t String::getSize() const
+{
+    return this->size;
+}
+
+char String::operator[](size_t index) const
+{
+    return this->data[index]; 
+}
+
+char String::operator[](size_t index)
+{
+    return this->data[index];
+}
