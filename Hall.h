@@ -21,6 +21,7 @@ class Hall
 
 		int getHallNumber() const;
 		int getFreeSeats() const;
+		int getBookedSeats() const;
 		bool getHallStatus() const;	
 		Seat* addSeats(int places);
 
@@ -165,6 +166,17 @@ int Hall::getFreeSeats() const
 	return free;
 }
 
+int Hall::getBookedSeats() const
+{
+	int booked = 0;
+	for(int i = 0; i < this->numberOfColumns*this->numberOfRows;i++)
+	{
+		if(this->seats[i].isSeatStatBooked() && !(this->seats[i].isSeatStatBought())) booked++;
+	}
+
+	return booked;
+}
+
 bool Hall::getHallStatus() const
 {
 	return this->isHallBooked;
@@ -267,18 +279,5 @@ void Hall::print() const
 
 #endif
 
-/*String Hall::generateSpecialSeatCode(int hallNumber, int seat)
-{
-	char tmp[5];
-
-	for(int i = 0; i < 5;i++)
-	{
-		char cch = 'a' + rand()%26;
-		tmp[i] = cch;
-	}
-	
-	String code = String(tmp);
-
-}*/
 
 

@@ -29,7 +29,8 @@ class Theatre
         void freeSeats() const;
         void bookSeat();
         void unbookSeat();
-        void buySeat();
+        void buySeatForEvent();
+        void bookedSeatsReport();
         
         size_t getPlaysSize() const;
         size_t getHallsSize() const;
@@ -239,7 +240,7 @@ void Theatre::unbookSeat()
     }
 }
 
-void Theatre::buySeat()
+void Theatre::buySeatForEvent()
 {
     size_t seatNumber;
     std::cin>>seatNumber;
@@ -264,8 +265,62 @@ void Theatre::buySeat()
         char c;
         std::cout << "ERROR: Would you like to buy another tcket or exit(y/n)?\n";
         std::cin>>c;
-        if(c == 'y') buySeat();
+        if(c == 'y') buySeatForEvent();
         else exit(0);
     }
+}
+
+void Theatre::bookedSeatsReport()
+{
+    Date date = Date();
+    String name = String();
+    
+    int choice = 0;
+    std::cout <<"Please, type 1, if u want to search by date, 2- name, 3- date and name:";
+    std::cin>>choice;
+
+    switch(choice)
+    {
+        case 1:std::cin>>date; break;
+
+        case 2: std::cin>>name; break;
+    
+        case 3:  std::cin>>date>>name; break;
+    }
+   
+    for(size_t i = 0; i < this->plays.getSize(); i++)
+    {
+        if(choice == 3)
+        {
+            if(this->plays[i].getPlayName() == name && this->plays[i].getPlayDate() == date)
+            {
+                std::cout <<this->plays[i].getPlayHall();
+                std::cout<<"Total booked, but not bought seats for this play: "<<this->plays[i].getPlayHall().getBookedSeats()<<std::endl;
+                std::cout<<"----------------------------------------------------------------------------------------------------------------"<<std::endl;
+            }
+        }
+        
+        if(choice == 1)
+        {
+             if(this->plays[i].getPlayDate() == date)
+            {
+                std::cout <<this->plays[i].getPlayHall();
+                std::cout<<"Total booked, but not bought seats for this play: "<<this->plays[i].getPlayHall().getBookedSeats()<<std::endl;
+                std::cout<<"----------------------------------------------------------------------------------------------------------------"<<std::endl;
+            }
+        }
+       
+       if(choice == 2)
+       {
+           if(this->plays[i].getPlayName() == name)
+            {
+                std::cout <<this->plays[i].getPlayHall();
+                std::cout<<"Total booked, but not bought seats for this play: "<<this->plays[i].getPlayHall().getBookedSeats()<<std::endl;
+                std::cout<<"----------------------------------------------------------------------------------------------------------------"<<std::endl;
+            }
+       }
+        
+    }
+
 }
 #endif

@@ -9,7 +9,6 @@ class Seat
 		int seatNumber;
 		bool isSeatBooked;
 		bool isSeatBought;
-		//size_t code;
 
 	public:
 		Seat();
@@ -20,8 +19,7 @@ class Seat
 		int getSeatNumber() const;
 		void setSeatNumber(int num);
 
-		//size_t generateCode() const;
-		//size_t getSeatCode() const;
+	
 		bool isSeatStatBought() const;
 		void buySeat();
 
@@ -43,8 +41,7 @@ class Seat
 
 		friend std::ostream& operator<<(std::ostream&out, const Seat&other)
 		{
-			std::cout <<"Seat number: "<<other.seatNumber<<", Is it booked? - "<<std::boolalpha<<other.isSeatBooked<<", Is it bought? - "<<std::boolalpha<<other.isSeatBought<<std::endl;
-	
+			out <<"Seat number: "<<other.seatNumber<<", Is it booked? - "<<std::boolalpha<<other.isSeatBooked<<", Is it bought? - "<<std::boolalpha<<other.isSeatBought<<std::endl;
 			return out;
 		}
 };
@@ -54,7 +51,6 @@ Seat::Seat()
 	this->seatNumber = 1;
 	this->isSeatBooked = false;
 	this->isSeatBought = false;
-	//this->code = 0;
 }
 
 Seat::Seat(int num, bool status)
@@ -62,7 +58,6 @@ Seat::Seat(int num, bool status)
 	this->seatNumber = num;
 	this->isSeatBooked = status;
 	this->isSeatBought = false;
-	//this->code = 0;
 }
 
 Seat::Seat(const Seat& other)
@@ -70,7 +65,6 @@ Seat::Seat(const Seat& other)
 	this->seatNumber = other.seatNumber;
 	this->isSeatBooked = other.isSeatBooked;
 	this->isSeatBought = other.isSeatBought;
-	//this->code = other.code;
 }
 
 Seat& Seat::operator=(const Seat& other)
@@ -80,7 +74,6 @@ Seat& Seat::operator=(const Seat& other)
 		this->seatNumber = other.seatNumber;
 		this->isSeatBooked = other.isSeatBooked;
 		this->isSeatBought = other.isSeatBought;
-		//this->code = other.code;
 	}
 	return *this;
 }
@@ -118,7 +111,7 @@ void Seat::buySeat()
 {
 	this->isSeatBooked = true;
 	this->isSeatBought = true;
-	//this->code = generateCode();
+	//this->code = 10101;
 }
 
 void Seat::print() const

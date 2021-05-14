@@ -23,7 +23,7 @@ class Play
         {
             return this->playHall;
         }
-
+        
         Date getPlayDate() const
         {
             return this->playDate;

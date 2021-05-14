@@ -76,6 +76,22 @@ bool String::operator==(const String& other)
     return result;
 }
 
+bool String::operator!=(const String& other)
+{
+    bool result = false;
+    if(this->size != other.size) return true;
+    if(this->size == other.size)
+    {
+        for(int i = 0; i < this->size; i++)
+        {
+            if(this->data[i] != other.data[i]) result = true;
+            else return false;
+        }
+    }
+
+    return result;
+}
+
 size_t String::getSize() const
 {
     return this->size;

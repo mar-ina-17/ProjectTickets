@@ -23,21 +23,12 @@ class String
 		int compare(const String& other);
 
 		bool operator==(const String&other);
+		bool operator!=(const String&other);
 		char operator[](size_t i) const;
 		char operator[](size_t i);
         
         friend std::istream& operator>>(std::istream& in, String&other)
         {   
-           	/*char input;
-			   int strSize = 0;
-
-			    while (in.get(input) && input != '\n')
-				{
-					other.data[strSize] = input;
-					strSize++;
-				}
-
-			other.size = strSize;*/
 			char tmp[200];
 			in.ignore();
 			in.getline(tmp, 200);
