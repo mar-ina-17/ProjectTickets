@@ -2,7 +2,6 @@
 #define DATE_H
 #include <iostream>
 #include <ostream>
-#include "String.h"
 
 class Date
 {

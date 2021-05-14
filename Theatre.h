@@ -30,6 +30,7 @@ class Theatre
         void bookSeat();
         void unbookSeat();
         void buySeat();
+        
         size_t getPlaysSize() const;
         size_t getHallsSize() const;
 
@@ -38,7 +39,7 @@ class Theatre
             out<<"Plays : "<<std::endl;
             out<<other.plays;
             std::cout<<std::endl;
-            //out<<"Halls : "<<other.halls;
+           // out<<"Halls : "<<other.halls;
             return out;
         }
 };
@@ -63,6 +64,8 @@ Theatre::Theatre()
 Theatre::Theatre(String name)
 {
     this->name = name;
+    this->plays;
+    this->halls;
 }
 
 Theatre::Theatre(const Theatre& other)

@@ -18,8 +18,7 @@ class Hall
 
 		void bookHall();
 		void unbookHall();
-		
-		String generateSpecialSeatCode(int hallNumber, int seat);
+
 		int getHallNumber() const;
 		int getFreeSeats() const;
 		bool getHallStatus() const;	
@@ -123,12 +122,6 @@ Hall& Hall::operator=(const Hall& other)
 		for(int i=0; i<this->numberOfColumns*this->numberOfRows;i++)
 		{
 			this->seats[i].setSeatNumber(other.seats[i].getSeatNumber());
-		//	this->seats[i].setSeatCode(other.seats[i].getSeatCode());
-		//	this->seats[i].setSeatNote(other.seats[i].getSeatNote());
-			if(!other.seats[i].isSeatStatBought())
-			{
-				this->seats[i].buySeat();
-			}
 			if(other.seats[i].isSeatStatBooked()) 
 			{
 				this->seats[i].bookSeat();
@@ -190,47 +183,9 @@ void Hall::unbookHall()
 	}
 }
 
-/*String Hall::generateSpecialSeatCode(int hallNumber, int seat)
-{
-	char tmp[5];
-
-	for(int i = 0; i < 5;i++)
-	{
-		char cch = 'a' + rand()%26;
-		tmp[i] = cch;
-	}
-	
-	String code = String(tmp);
-
-}*/
-
 void Hall::setHallNumber(int number)
 {
 	this->hallNumber = number;
-}
-
-void Hall::buySeatInHall(int place)
-{
-	if(place > 0 && place <= this->numberOfColumns*this->numberOfRows)
-	{
-		if(!this->seats[place-1].isSeatStatBooked())
-		{
-			this->seats[place-1].buySeat();
-			this->isHallBooked = true;
-		}
-		else
-		{
-			int pl;
-			std::cout<<"Seat is already booked or bought, so it can't be bought again. Try again by selecting another seat or exit booking (press '0'): "<<std::endl;
-			std::cin>>pl;
-			if(pl == 0) exit(0);
-			buySeatInHall(pl);
-		}
-	}
-	else
-	{
-		std::cout << "No such seat found."<<std::endl;
-	}
 }
 
 void Hall::bookSeatInHall(int place)
@@ -280,6 +235,29 @@ void Hall::unbookSeatInHall(int place)
 
 }
 
+void Hall::buySeatInHall(int place)
+{
+	if(place > 0 && place <= this->numberOfColumns*this->numberOfRows)
+	{
+		if(!this->seats[place-1].isSeatStatBooked())
+		{
+			this->seats[place-1].buySeat();
+			this->isHallBooked = true;
+		}
+		else
+		{
+			int pl;
+			std::cout<<"Seat is already booked or bought, so it can't be bought again. Try again by selecting another seat or exit booking (press '0'): "<<std::endl;
+			std::cin>>pl;
+			if(pl == 0) exit(0);
+			buySeatInHall(pl);
+		}
+	}
+	else
+	{
+		std::cout << "No such seat found."<<std::endl;
+	}
+}
 void Hall::print() const
 {
 	std::cout << "Hall number: "<<this->hallNumber<<std::endl;
@@ -288,3 +266,19 @@ void Hall::print() const
 }
 
 #endif
+
+/*String Hall::generateSpecialSeatCode(int hallNumber, int seat)
+{
+	char tmp[5];
+
+	for(int i = 0; i < 5;i++)
+	{
+		char cch = 'a' + rand()%26;
+		tmp[i] = cch;
+	}
+	
+	String code = String(tmp);
+
+}*/
+
+

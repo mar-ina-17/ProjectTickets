@@ -1,20 +1,24 @@
 #include <iostream>
-#include "String.h"
 #include "Vector.h"
-#include "Play.h"
 #include "Theatre.h"
-#include <ctime>
-#include <cstdlib>
 
 int main()
 {    
     Theatre te = Theatre();
+    
     te.generateHalls();
+    //
     te.addEvent();
-
     std::cout <<"-------------\n";
-   // te.buySeat();
-std::cout <<te;
+    te.buySeat();
+    //te.bookSeat();
+    std::cout <<"-------------\n";
+    /*te.freeSeats();
+    std::cout <<"-------------\n";
+    te.unbookSeat();*/
+    std::cout <<te;
+    //te.buySeat();
+    //
 
     /*//
     //std::cout <<"-------------\n";

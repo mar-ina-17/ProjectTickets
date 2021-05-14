@@ -149,7 +149,7 @@ size_t Vector<T>::getCapacity() const {
 }
 
 template<class T>
-void Vector<T>::push_back(T element) {
+void Vector<T>::push_back(T element) { //&
 	this->size++;
 	if (this->size >= this->capacity) {
 		this->resize();
