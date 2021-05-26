@@ -1,7 +1,6 @@
 #ifndef DATE_H
 #define DATE_H
 #include <iostream>
-#include <ostream>
 
 class Date
 {
@@ -20,6 +19,7 @@ class Date
 
         friend std::istream& operator>>(std::istream&in, Date&other)
         {
+            //change
             char stopper;
             in>>other.day;
             in>>stopper;
@@ -45,7 +45,7 @@ class Date
                 in>>other.year;
             }
 
-            if(other.month % 2 == 0)
+            if(other.month % 2 == 0) //mesecite ne sa ok 
             {
                 if(other.day < 0 || other.day > 30)
                 {
@@ -55,7 +55,7 @@ class Date
             }
             if (other.month == 2)
             {
-                if((other.year % 4 == 0) && (other.year % 100 == 0) && (other.year % 400 == 0) && (other.day < 0 || other.day > 29))
+                if((other.year % 4 == 0) && (other.year % 100 == 0) && (other.year % 400 == 0) && (other.day < 0 || other.day > 29))//proveri v google
                 {
                     std::cout <<"Invalid date, please, change date. "<<std::endl;
                     return (in >> other);

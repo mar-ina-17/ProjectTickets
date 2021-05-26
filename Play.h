@@ -1,7 +1,6 @@
 #ifndef PLAY_H
 #define PLAY_H
 #include <iostream>
-#include <ostream>
 #include "String.h"
 #include "Hall.h"
 #include "Date.h"
@@ -15,9 +14,9 @@ class Play
 
     public:
         Play();
-        Play(const Date playDate, const String playName, const Hall playHall);
+        Play(const Date playDate, const String playName, const Hall playHall);//&
         Play(const Play&);
-        Play& operator=(const Play&);
+        Play& operator=(const Play&);//
         
         Hall getPlayHall() const
         {
@@ -34,9 +33,9 @@ class Play
             return this->playName;
         }
 
-        void setPlayDate(Date date);
-        void setPlayName(String name);
-        void setPlayHall(Hall hall);
+        void setPlayDate(Date date);//&
+        void setPlayName(String name);//&
+        void setPlayHall(Hall hall);//&
 
         void print() const;
     
@@ -72,7 +71,7 @@ Play::Play()
     this->playHall = Hall();
 }
 
-Play::Play(const Date date, const String name, const Hall hall)
+Play::Play(const Date date, const String name, const Hall hall)//&
 {
     this->playName =  name;
     this->playDate = date;

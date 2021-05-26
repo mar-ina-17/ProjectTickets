@@ -1,7 +1,6 @@
 #ifndef VECTOR_H
 #define VECTOR_H
 #include <iostream>
-#include <ostream>
 
 template <class T>
 class Vector
@@ -18,7 +17,7 @@ private:
 public:
 	Vector();
 	Vector(size_t capacity);
-	Vector(const Vector&);
+	Vector(const Vector<T>&);
 	Vector& operator=(const Vector<T>&);
 	~Vector();
 
@@ -28,10 +27,10 @@ public:
 	size_t getSize() const;
 	size_t getCapacity() const;
 
-	void push_back(T);
+	void push_back(T);//& change
 	void pop_back();
 	void popByIndex(size_t);
-	void popByData(T);
+	void popByData(T);//& change
 
 	bool isEmpty () const;
 
@@ -178,7 +177,7 @@ void Vector<T>::pop_back() {
 template<class T>
 void Vector<T>::popByIndex(size_t index) {
     if (isEmpty()) return;
-	for (size_t i = index; i < this->size; ++i) {
+	for (size_t i = index; i < this->size - 1; ++i) {
 		this->arr[i] = this->arr[i + 1];
 	}
 	this->size--;

@@ -5,7 +5,7 @@
 void displayHelp()
 {
     std::cout <<"0 - exit program" << std::endl;
-    std::cout <<"1 - addevent <date> <hall> <name> -- Adds a new event of date <date> named <name> in the <hall> hall.\n";
+    std::cout <<"1 - addevent <date> <name> <hall> -- Adds a new event of date <date> named <name> in the <hall> hall.\n";
     std::cout <<"2 - freeseats <date> <name> -- Displays a free space for a performance named <name> on <date> (unsold and unsaved tickets).\n";
     std::cout <<"3 - book <seat> <date> <name> -- Saves a show ticket named <name> to <date> on line <row> and place <seat>.\n";
     std::cout <<"4 - unbook <seat> <date> <name> -- Cancel a reservation for a show named <name> on <date> on line <row> and place <seat>.\n";
@@ -16,7 +16,7 @@ void displayHelp()
 
 int main()
 {    
-    Theatre te = Theatre();
+    /* Theatre te = Theatre();
     te.generateHalls();
 
 displayHelp();
@@ -82,5 +82,12 @@ std::cin>>command;
             std::cin>>command;
         } 
     }
+*/
+
+    Date date;
+    std::cin>>date;
+    std::cout<<date;
+
+
     return 0;
 }

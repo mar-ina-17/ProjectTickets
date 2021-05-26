@@ -20,15 +20,16 @@ class String
 		size_t getSize() const;
 
 		String& concat(const String& other);
-		int compare(const String& other);
+		int compare(const String& other);//const define operator>=& > operator=< & <
 
-		bool operator==(const String&other);
-		bool operator!=(const String&other);
+		bool operator==(const String&other);//const
+		bool operator!=(const String&other);//const
 		char operator[](size_t i) const;
-		char operator[](size_t i);
+		char& operator[](size_t i);
         
         friend std::istream& operator>>(std::istream& in, String&other)
         {   
+			//change this;
 			char tmp[200];
 			in.ignore();
 			in.getline(tmp, 200);

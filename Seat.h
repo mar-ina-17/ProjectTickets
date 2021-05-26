@@ -1,7 +1,6 @@
 #ifndef SEAT_H
 #define SEAT_H
 #include <iostream>
-#include <ostream>
 
 class Seat
 {
@@ -14,10 +13,10 @@ class Seat
 		Seat();
 		Seat(int num, bool status);
 		Seat(const Seat&);
-		Seat& operator=(const Seat&);
+		Seat& operator=(const Seat&);//
 		
 		int getSeatNumber() const;
-		void setSeatNumber(int num);
+		void setSeatNumber(int num); //private
 
 	
 		bool isSeatStatBought() const;

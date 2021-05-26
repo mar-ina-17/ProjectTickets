@@ -11,6 +11,7 @@ class Hall
 		Seat* seats;
 
 	public:
+		//mani go celiq toq hall i tresni edin vector
 		Hall();
 		Hall(int rows, int cols,int num);
 		Hall(const Hall &);

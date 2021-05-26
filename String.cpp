@@ -78,18 +78,7 @@ bool String::operator==(const String& other)
 
 bool String::operator!=(const String& other)
 {
-    bool result = false;
-    if(this->size != other.size) return true;
-    if(this->size == other.size)
-    {
-        for(int i = 0; i < this->size; i++)
-        {
-            if(this->data[i] != other.data[i]) result = true;
-            else return false;
-        }
-    }
-
-    return result;
+  return !(*this == other);
 }
 
 size_t String::getSize() const
@@ -102,7 +91,7 @@ char String::operator[](size_t index) const
     return this->data[index]; 
 }
 
-char String::operator[](size_t index)
+char& String::operator[](size_t index)
 {
     return this->data[index];
 }
