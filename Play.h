@@ -14,9 +14,8 @@ class Play
 
     public:
         Play();
-        Play(const Date playDate, const String playName, const Hall playHall);//&
+        Play(const Date &playDate, const String &playName, const Hall& playHall);//&
         Play(const Play&);
-        Play& operator=(const Play&);//
         
         Hall getPlayHall() const
         {
@@ -33,23 +32,20 @@ class Play
             return this->playName;
         }
 
-        void setPlayDate(Date date);//&
-        void setPlayName(String name);//&
-        void setPlayHall(Hall hall);//&
-
-        void print() const;
+        void setPlayDate(Date &date);//&
+        void setPlayName(String &name);//&
+        void setPlayHall(Hall& hall);//&
     
 
         friend std::istream& operator>>(std::istream& in, Play& other)
         {
-            std::cout<<"Insert play's date: ";
-            in>>other.playDate;
-            
-            in>>other.playHall;
-
             std::cout<<"Insert play's name: ";
-            in.ignore();
             in>>other.playName;
+			
+			std::cout<<"Insert play's date: ";
+            in>>other.playDate;
+			
+			in>>other.playHall;
 
             return in;
         }
@@ -58,7 +54,7 @@ class Play
         {
             out<<"Play's date: "<<other.playDate;
             out<<"Play's name: "<<other.playName<<std::endl;
-            out<<other.playHall<<std::endl;
+           	out<<other.playHall<<std::endl;
 
             return out;
         }
@@ -66,14 +62,13 @@ class Play
 
 Play::Play()
 {
-    this->playDate = Date();
+	this->playDate = Date();
     this->playName = String("Test play name");
-    this->playHall = Hall();
 }
 
-Play::Play(const Date date, const String name, const Hall hall)//&
+Play::Play(const Date &date, const String &name, const Hall &hall)//&
 {
-    this->playName =  name;
+    this->playName = name;
     this->playDate = date;
     this->playHall = hall;
 }
@@ -85,35 +80,17 @@ Play::Play(const Play& other)
     this->playHall = other.playHall;
 }
 
-Play& Play::operator=(const Play& other)
-{
-    if(this != &other)
-    {
-        this->playDate = other.playDate;
-        this->playName = other.playName;
-        this->playHall = other.playHall;
-    }
-    return *this;
-}
-
-void Play::print() const
-{
-    std::cout <<this->playDate;
-    std::cout <<this->playName;
-    std::cout <<this->playHall;
-}
-
-void Play::setPlayDate(Date date)
+void Play::setPlayDate(Date &date)
 {
     this->playDate = date;
 }
 
-void Play::setPlayName(String name)
+void Play::setPlayName(String &name)
 {
    this->playName = name;
 }
 
-void Play::setPlayHall(Hall hall)
+void Play::setPlayHall(Hall &hall)
 {
     this->playHall = hall;
 }

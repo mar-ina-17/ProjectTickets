@@ -1,7 +1,7 @@
 #include <iostream>
-#include "Vector.h"
+//#include "Vector.h"
 #include "Theatre.h"
-
+//#include "Play.h"
 void displayHelp()
 {
     std::cout <<"0 - exit program" << std::endl;
@@ -16,9 +16,10 @@ void displayHelp()
 
 int main()
 {    
-    /* Theatre te = Theatre();
-    te.generateHalls();
-
+     Theatre te;
+   	te.generateHalls(4);
+	std::cout<<te;
+/*
 displayHelp();
 size_t command;
 std::cin>>command;
@@ -82,12 +83,16 @@ std::cin>>command;
             std::cin>>command;
         } 
     }
-*/
+/**/
 
-    Date date;
+  /*  Date date;
     std::cin>>date;
     std::cout<<date;
 
+
+	Play s;
+	std::cin>>s;
+	std::cout<<s;*/
 
     return 0;
 }

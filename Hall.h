@@ -1,14 +1,15 @@
 #ifndef HALL_H
 #define HALL_H
 #include "Seat.h"
+#include "Vector.h"
 class Hall
 {
 	private:
 		int hallNumber;
 		int numberOfRows;
-		int numberOfColumns;
+		int numberOfSeats;
 		bool isHallBooked;
-		Seat* seats;
+		Vector<Seat> seats;
 
 	public:
 		//mani go celiq toq hall i tresni edin vector
@@ -24,7 +25,7 @@ class Hall
 		int getFreeSeats() const;
 		int getBookedSeats() const;
 		bool getHallStatus() const;	
-		Seat* addSeats(int places);
+		Vector<Seat> addSeats(int places);
 
 		void setHallNumber(int number);
 		void buySeatInHall(int place);
@@ -40,18 +41,18 @@ class Hall
 			std::cout<<"Insert number of rows: ";
 			in>>other.numberOfRows;
 			std::cout<<"Insert number of seats per row: ";
-			in>>other.numberOfColumns;
+			in>>other.numberOfSeats;
 
 			other.isHallBooked = false;
 
-			int places = other.numberOfRows*other.numberOfColumns;
+			int places = other.numberOfRows*other.numberOfSeats;
 
-			Seat* newSeats = new Seat [places];
+			Vector<Seat> newSeats = Vector<Seat>(places);
 			
 				for(int i = 0; i < places; i++)
 				{
 					Seat current = Seat(i+1, false);
-					newSeats[i] = Seat(current);
+					newSeats.push_back(current);
 				}
 
 			other.seats = newSeats;
@@ -64,7 +65,7 @@ class Hall
 			out << "Hall number: "<<other.hallNumber<<std::endl;
 			out << "Is hall booked: "<<std::boolalpha<<other.getHallStatus()<<std::endl;
 			
-			for(int i = 0; i < other.numberOfColumns*other.numberOfRows; i++)
+			for(int i = 0; i < other.numberOfSeats*other.numberOfRows; i++)
 			{
 				out<<other.seats[i];
 			}
@@ -80,10 +81,10 @@ Hall::Hall()
 {
 	this->hallNumber = 1000;
 	this->numberOfRows = 2;
-	this->numberOfColumns = 3;
+	this->numberOfSeats = 3;
 	this->isHallBooked = false;
 	
-	int places = this->numberOfRows*this->numberOfColumns;
+	int places = this->numberOfRows*this->numberOfSeats;
 
 	this->seats = addSeats(places);
 }
@@ -92,10 +93,10 @@ Hall::Hall(int rows, int cols, int num)
 {
 	this->hallNumber = num;
 	this->numberOfRows = rows;
-	this->numberOfColumns = cols;
+	this->numberOfSeats = cols;
 	this->isHallBooked = false;
 	
-	int places = this->numberOfRows*this->numberOfColumns;
+	int places = this->numberOfRows*this->numberOfSeats;
 
 	this->seats = addSeats(places);
 
@@ -105,7 +106,7 @@ Hall::Hall(const Hall &other)
 {
 	this->hallNumber = other.hallNumber;
 	this->numberOfRows = other.numberOfRows;
-	this->numberOfColumns = other.numberOfColumns;
+	this->numberOfSeats = other.numberOfSeats;
 	this->isHallBooked = other.isHallBooked;
 	this->seats = other.seats;
 }
@@ -116,36 +117,22 @@ Hall& Hall::operator=(const Hall& other)
 	{
 		this->hallNumber = other.hallNumber;
 		this->numberOfRows = other.numberOfRows;
-		this->numberOfColumns = other.numberOfColumns;
+		this->numberOfSeats = other.numberOfSeats;
 		this->isHallBooked = other.isHallBooked;
-
-		delete[]this->seats;
-		this->seats = new Seat [this->numberOfColumns*this->numberOfRows]; 
-		for(int i=0; i<this->numberOfColumns*this->numberOfRows;i++)
-		{
-			this->seats[i].setSeatNumber(other.seats[i].getSeatNumber());
-			if(other.seats[i].isSeatStatBooked()) 
-			{
-				this->seats[i].bookSeat();
-			}
-			else
-			{
-				this->seats[i].unbookSeat();
-			} 
-		}
+		this->seats = other.seats;
 	}
 
 	return *this;
 }
 
-Seat* Hall::addSeats(int places)
+Vector<Seat> Hall::addSeats(int places)
 {
-	Seat*newSeats = new Seat[places];
+	Vector<Seat>newSeats = Vector<Seat>(places);
 
 		for(int i = 0; i < places; i++)
 		{
 			Seat current = Seat(i+1, false);
-			newSeats[i] =current;
+			newSeats.push_back(current);
 		}
 
 	return newSeats;
@@ -159,7 +146,7 @@ int Hall::getHallNumber() const
 int Hall::getFreeSeats() const
 {
 	int free = 0;
-	for(int i = 0; i < this->numberOfColumns*this->numberOfRows;i++)
+	for(int i = 0; i < this->numberOfSeats*this->numberOfRows;i++)
 	{
 		if(!this->seats[i].isSeatStatBooked()) free++;
 	}
@@ -170,7 +157,7 @@ int Hall::getFreeSeats() const
 int Hall::getBookedSeats() const
 {
 	int booked = 0;
-	for(int i = 0; i < this->numberOfColumns*this->numberOfRows;i++)
+	for(int i = 0; i < this->numberOfSeats*this->numberOfRows;i++)
 	{
 		if(this->seats[i].isSeatStatBooked() && !(this->seats[i].isSeatStatBought())) booked++;
 	}
@@ -190,7 +177,7 @@ void Hall::bookHall()
 
 void Hall::unbookHall()
 {
-	for(int i = 0; i < this->numberOfColumns*this->numberOfRows;i++)
+	for(int i = 0; i < this->numberOfSeats*this->numberOfRows;i++)
 	{
 		this->seats[i].unbookSeat();
 	}
@@ -203,7 +190,7 @@ void Hall::setHallNumber(int number)
 
 void Hall::bookSeatInHall(int place)
 {
-	if(place > 0 && place <= this->numberOfColumns*this->numberOfRows)
+	if(place > 0 && place <= this->numberOfSeats*this->numberOfRows)
 	{
 		if(!this->seats[place-1].isSeatStatBooked())
 		{
@@ -227,7 +214,7 @@ void Hall::bookSeatInHall(int place)
 
 void Hall::unbookSeatInHall(int place)
 {
-	if(place > 0 && place <= this->numberOfColumns*this->numberOfRows)
+	if(place > 0 && place <= this->numberOfSeats*this->numberOfRows)
 	{
 		if(this->seats[place-1].isSeatStatBooked() && !(this->seats[place-1].isSeatStatBought()))
 		{
@@ -250,7 +237,7 @@ void Hall::unbookSeatInHall(int place)
 
 void Hall::buySeatInHall(int place)
 {
-	if(place > 0 && place <= this->numberOfColumns*this->numberOfRows)
+	if(place > 0 && place <= this->numberOfSeats*this->numberOfRows)
 	{
 		if(!this->seats[place-1].isSeatStatBooked())
 		{
@@ -271,6 +258,7 @@ void Hall::buySeatInHall(int place)
 		std::cout << "No such seat found."<<std::endl;
 	}
 }
+
 void Hall::print() const
 {
 	std::cout << "Hall number: "<<this->hallNumber<<std::endl;

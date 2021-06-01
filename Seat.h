@@ -8,17 +8,16 @@ class Seat
 		int seatNumber;
 		bool isSeatBooked;
 		bool isSeatBought;
+		
+		void setSeatNumber(int num);//private
 
 	public:
 		Seat();
 		Seat(int num, bool status);
 		Seat(const Seat&);
-		Seat& operator=(const Seat&);//
-		
-		int getSeatNumber() const;
-		void setSeatNumber(int num); //private
 
-	
+		int getSeatNumber() const;
+		 
 		bool isSeatStatBought() const;
 		void buySeat();
 
@@ -66,16 +65,6 @@ Seat::Seat(const Seat& other)
 	this->isSeatBought = other.isSeatBought;
 }
 
-Seat& Seat::operator=(const Seat& other)
-{
-	if(this != &other)
-	{
-		this->seatNumber = other.seatNumber;
-		this->isSeatBooked = other.isSeatBooked;
-		this->isSeatBought = other.isSeatBought;
-	}
-	return *this;
-}
 int Seat::getSeatNumber() const
 {
 	return this->seatNumber;

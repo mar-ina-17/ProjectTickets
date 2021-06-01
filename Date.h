@@ -13,7 +13,6 @@ class Date
         Date();
         Date(size_t day, size_t month, size_t year);
         Date(const Date&);
-        Date& operator=(const Date&);
 
         bool operator==(const Date&);
 
@@ -21,11 +20,11 @@ class Date
         {
             //change
             char stopper;
-            in>>other.day;
+			in>>other.year;
             in>>stopper;
             in>>other.month;
             in>>stopper;
-            in>>other.year;
+            in>>other.day;
 
             if(other.day <= 0 || other.day > 31)
             {
@@ -106,18 +105,6 @@ Date::Date(const Date& other)
     this->day = other.day;
     this->month = other.month;
     this->year = other.year;
-}
-
-Date& Date::operator=(const Date& other)
-{
-    if(this != &other)
-    {
-        this->day = other.day;
-        this->month = other.month;
-        this->year = other.year;
-    }
-
-    return *this;
 }
 
 bool Date::operator==(const Date& other)
