@@ -1,6 +1,7 @@
 #ifndef helpers
 #define helpers
 #include <iostream>
+
 char * emptyAndCreateString(char * str, size_t len)
 {
     delete [] str;

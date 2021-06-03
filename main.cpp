@@ -16,10 +16,10 @@ void displayHelp()
 
 int main()
 {    
-     Theatre te;
-   	te.generateHalls(4);
+    Theatre te;
+   	te.generateHalls(3);
 	std::cout<<te;
-/*
+
 displayHelp();
 size_t command;
 std::cin>>command;
@@ -92,7 +92,10 @@ std::cin>>command;
 
 	Play s;
 	std::cin>>s;
-	std::cout<<s;*/
+	std::cout<<s;
 
+/* Theatre te;
+   	te.generateHalls(4);
+	std::cout<<te;*/
     return 0;
 }

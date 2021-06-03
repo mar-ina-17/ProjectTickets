@@ -34,8 +34,11 @@ class String
 			char*tmp;
 			in.ignore();
 			in.getline(tmp,1024);
+			
+			other.size = strlen(tmp);
+			other.data = emptyAndCreateString(other.data, other.size);
 			other.data = strcpy(other.data, tmp);
-			other.size = strlen(other.data);
+			
 			return in;
         }
 

@@ -10,20 +10,18 @@
 class Theatre
 {
 private:
-    String name;
     Vector<Play> plays;
     Vector<Hall> halls;
 
 public:
     Theatre();
-    Theatre(String name); //&
     Theatre(const Theatre &);
     Theatre &operator=(const Theatre &);
 
-    void addHalls(Vector<Hall> halls); //const
-    void generateHalls();
-    void addPlays(Vector<Play> plays); //const
-    void addPlay(Play play);
+    void addHalls(const Vector<Hall> halls); //const
+    void generateHalls(const int numOfHalls);
+    void addPlays(const Vector<Play> plays); //const
+    void addPlay(Play &play);
 
     void addEvent();
     void freeSeats() const;
@@ -40,7 +38,7 @@ public:
         out << "Plays : " << std::endl;
         out << other.plays;
         std::cout << std::endl;
-        // out<<"Halls : "<<other.halls;
+        out<<"Halls : "<<other.halls;
         return out;
     }
 };
@@ -57,21 +55,13 @@ size_t Theatre::getHallsSize() const
 
 Theatre::Theatre()
 {
-    this->plays;
-    this->halls;
-    this->name = "Theatre";
-}
-
-Theatre::Theatre(String name)
-{
-    this->name = name;
-    this->plays;
-    this->halls;
+    //this->plays = Vector<Play>();
+   // this->halls = Vector<Hall>();
+	std::cout<<"Theatre constructed.";
 }
 
 Theatre::Theatre(const Theatre &other)
 {
-    this->name = other.name;
     this->halls = other.halls;
     this->plays = other.plays;
 }
@@ -80,7 +70,6 @@ Theatre &Theatre::operator=(const Theatre &other)
 {
     if (this != &other)
     {
-        this->name = other.name;
         this->halls = other.halls;
         this->plays = other.plays;
     }
@@ -103,16 +92,16 @@ void Theatre::addPlays(Vector<Play> plays)
     }
 }
 
-void Theatre::addPlay(Play play)
+void Theatre::addPlay(Play &play)
 {
     this->plays.push_back(play);
 }
 
-void Theatre::generateHalls() //add parametri 4 numer and hallnum
+void Theatre::generateHalls(const int numOfHalls) //add parametri 4 numer and hallnum
 {
-    for (int i = 1; i < 6; i++)
+    for (int i = 0; i < numOfHalls; i++)
     {
-        Hall newHall = Hall(i, i + 1, 1000 + i);
+        Hall newHall = Hall(i+2, i + 3, 1000 + i);
         this->halls.push_back(newHall);
     }
 }

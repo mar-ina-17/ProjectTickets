@@ -17,20 +17,9 @@ class Play
         Play(const Date &playDate, const String &playName, const Hall& playHall);//&
         Play(const Play&);
         
-        Hall getPlayHall() const
-        {
-            return this->playHall;
-        }
-        
-        Date getPlayDate() const
-        {
-            return this->playDate;
-        }
-
-        String getPlayName() const
-        {
-            return this->playName;
-        }
+        Hall getPlayHall() const;
+        Date getPlayDate() const;
+        String getPlayName() const;
 
         void setPlayDate(Date &date);//&
         void setPlayName(String &name);//&
@@ -94,4 +83,20 @@ void Play::setPlayHall(Hall &hall)
 {
     this->playHall = hall;
 }
+
+Hall Play::getPlayHall() const
+{
+	return this->playHall;
+}
+
+Date Play::getPlayDate() const
+{
+	return this->playDate;
+}
+
+String Play::getPlayName() const
+{
+	return this->playName;
+}
+
 #endif

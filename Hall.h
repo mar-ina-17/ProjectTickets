@@ -258,7 +258,6 @@ void Hall::buySeatInHall(int place)
 		std::cout << "No such seat found."<<std::endl;
 	}
 }
-
 void Hall::print() const
 {
 	std::cout << "Hall number: "<<this->hallNumber<<std::endl;
