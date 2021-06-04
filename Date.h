@@ -1,13 +1,14 @@
 #ifndef DATE_H
 #define DATE_H
 #include <iostream>
-
+#include <fstream>
 class Date
 {
     private:
         size_t day;
         size_t month;
         size_t year;
+		char delimiter = '-';
 
     public:
         Date();
@@ -19,11 +20,11 @@ class Date
         friend std::istream& operator>>(std::istream&in, Date&other)
         {
             //change
-            char stopper;
+            char delimiter;
 			in>>other.year;
-            in>>stopper;
+            in>>delimiter;
             in>>other.month;
-            in>>stopper;
+            in>>delimiter;
             in>>other.day;
 
             if(other.day <= 0 || other.day > 31)
@@ -81,9 +82,21 @@ class Date
 
         friend std::ostream& operator<<(std::ostream& out, const Date&other)
         {
-            out<<other.day<<"-"<<other.month<<"-"<<other.year<<std::endl;
+            out<<other.year<<other.delimiter<<other.month<<other.delimiter<<other.day<<std::endl;
             return out;
         }
+
+		friend std::ofstream& operator<<(std::ofstream& of, Date &other)
+		{
+			of<<other.year<<other.delimiter<<other.month<<other.delimiter<<other.day;
+			return of;
+		}
+
+		friend std::ifstream& operator>>(std::ifstream&inf, Date&other)
+		{
+			inf>>other.year>>other.delimiter>>other.month>>other.delimiter>>other.day;					
+			return inf;
+		}
 
 };
 Date::Date()

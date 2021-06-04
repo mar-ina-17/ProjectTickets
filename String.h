@@ -1,6 +1,7 @@
 #ifndef STRING_H
 #define STRING_H
 #include <iostream>
+#include <fstream>
 #include "helpers.cpp"
 class String
 {
@@ -56,6 +57,20 @@ class String
 
 		    return out;
 	    }
+
+		friend std::ofstream& operator<<(std::ofstream& of, String &other)
+		{
+			of<<other.data;
+			return of;
+		}
+
+		friend std::ifstream& operator>>(std::ifstream&inf, String&other)
+		{	
+			inf.ignore();	
+			inf.getline(other.data, 1024);	
+			other.size = strlen(other.data);							
+			return inf;
+		}
 };
 
 String::String()

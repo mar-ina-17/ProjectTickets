@@ -1,7 +1,8 @@
 #ifndef SEAT_H
 #define SEAT_H
 #include <iostream>
-
+#include <fstream>
+#include "String.h"
 class Seat
 {
 	private:
@@ -41,6 +42,20 @@ class Seat
 		{
 			out <<"Seat number: "<<other.seatNumber<<", Is it booked? - "<<std::boolalpha<<other.isSeatBooked<<", Is it bought? - "<<std::boolalpha<<other.isSeatBought<<std::endl;
 			return out;
+		}
+
+		friend std::ofstream& operator<<(std::ofstream& of, Seat &other)
+		{
+			String a = String("Seat number: ");
+			of<<a<<other.seatNumber<<", Is it booked? - "<<other.isSeatBooked<<", Is it bought? - "<<other.isSeatBought;
+			return of;
+		}
+
+		friend std::ifstream& operator>>(std::ifstream&inf, Seat&other)
+		{
+			inf>>other.seatNumber;	
+
+			return inf;
 		}
 };
 

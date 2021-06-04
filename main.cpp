@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 //#include "Vector.h"
 #include "Theatre.h"
 //#include "Play.h"
@@ -14,8 +15,29 @@ void displayHelp()
     std::cout <<"7 - help\n";
 }
 
+
 int main()
-{    
+{   
+	String d;
+	//std::cin>>d;
+	//std::cout<<d;
+		std::ifstream myfile;
+		myfile.open ("file.txt");
+		myfile>>d;	
+	 	 myfile.close();
+		  
+	  std::cout<<d;
+/*
+std::ofstream myfile;
+  myfile.open ("file.txt");
+  myfile << d;
+  myfile.close();
+	*//*
+String s = String("kura mi qnko");
+std::ofstream myfile;
+  myfile.open ("file.txt");
+  myfile << s;
+  myfile.close();
     Theatre te;
    	te.generateHalls(3);
 	std::cout<<te;
@@ -83,12 +105,9 @@ std::cin>>command;
             std::cin>>command;
         } 
     }
-/**/
+*/
 
-  /*  Date date;
-    std::cin>>date;
-    std::cout<<date;
-
+ /*
 
 	Play s;
 	std::cin>>s;
