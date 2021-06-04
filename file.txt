@@ -1,0 +1,1 @@
+Seat number: 123, Is it booked? - 1, Is it bought? - 1

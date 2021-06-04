@@ -1,5 +1,4 @@
 #include "String.h"
-#include "helpers.cpp"
 
 String::String()
 {
@@ -61,7 +60,7 @@ int String::compare(const String& other)
     return strcmp(this->data, other.data);
 }
 
-bool String::operator==(const String& other)
+bool String::operator==(const String& other) const
 {
     bool result = false;
     if(this->size == other.size)
@@ -76,7 +75,7 @@ bool String::operator==(const String& other)
     return result;
 }
 
-bool String::operator!=(const String& other)
+bool String::operator!=(const String& other) const
 {
   return !(*this == other);
 }
@@ -95,3 +94,4 @@ char& String::operator[](size_t index)
 {
     return this->data[index];
 }
+
