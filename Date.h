@@ -2,6 +2,7 @@
 #define DATE_H
 #include <iostream>
 #include <fstream>
+
 class Date
 {
     private:
@@ -16,10 +17,12 @@ class Date
         Date(const Date&);
 
         bool operator==(const Date&);
+		bool operator>=(const Date&);
+		bool operator<(const Date& other);
+
 
         friend std::istream& operator>>(std::istream&in, Date&other)
         {
-            //change
             char delimiter;
 			in>>other.year;
             in>>delimiter;
@@ -45,7 +48,7 @@ class Date
                 in>>other.year;
             }
 
-            if(other.month % 2 == 0) //mesecite ne sa ok 
+            if(other.month == 4 || other.month == 6 || other.month == 9 || other.month == 11)  
             {
                 if(other.day < 0 || other.day > 30)
                 {
@@ -53,6 +56,7 @@ class Date
                     return (in >> other);
                 }
             }
+
             if (other.month == 2)
             {
                 if((other.year % 4 == 0) && (other.year % 100 == 0) && (other.year % 400 == 0) && (other.day < 0 || other.day > 29))//proveri v google
@@ -124,5 +128,19 @@ bool Date::operator==(const Date& other)
 {
     if (this->day == other.day && this->month == other.month && this->year == other.year) return true;
     return false;
+}
+
+bool Date::operator>=(const Date& other)
+{
+	if ((this->year >= other.year) && (this->month >= other.month) && (this->day >= other.day)) return true;
+	if ((this->year > other.year) && (this->month <= other.month) && (this->day < other.day)) return true;
+	if ((this->year >= other.year) && (this->month >= other.month) && (this->day > other.day)) return true;
+	
+	else return false;
+}
+
+bool Date::operator<(const Date& other)
+{
+	return *this >= other;
 }
 #endif

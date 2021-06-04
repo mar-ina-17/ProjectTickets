@@ -1,7 +1,7 @@
 #ifndef PLAY_H
 #define PLAY_H
 #include <iostream>
-#include "String.h"
+//#include "String.h"
 #include "Hall.h"
 #include "Date.h"
 
@@ -21,9 +21,9 @@ class Play
         Date getPlayDate() const;
         String getPlayName() const;
 
-        void setPlayDate(Date &date);//&
-        void setPlayName(String &name);//&
-        void setPlayHall(Hall& hall);//&
+        void setPlayDate(Date &date);
+        void setPlayName(String &name);
+        void setPlayHall(Hall& hall);
     
 
         friend std::istream& operator>>(std::istream& in, Play& other)
@@ -47,6 +47,15 @@ class Play
 
             return out;
         }
+
+		friend std::ofstream& operator<<(std::ofstream& out, Play&other)
+        {
+            out<<"Play's date: "<<other.playDate;
+            out<<"Play's name: "<<other.playName<<std::endl;
+           	out<<other.playHall<<std::endl;
+
+            return out;
+        }
 };
 
 Play::Play()
@@ -55,7 +64,7 @@ Play::Play()
     this->playName = String("Test play name");
 }
 
-Play::Play(const Date &date, const String &name, const Hall &hall)//&
+Play::Play(const Date &date, const String &name, const Hall &hall)
 {
     this->playName = name;
     this->playDate = date;

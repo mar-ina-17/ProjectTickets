@@ -12,7 +12,6 @@ class Hall
 		Vector<Seat> seats;
 
 	public:
-		//mani go celiq toq hall i tresni edin vector
 		Hall();
 		Hall(int rows, int cols,int num);
 		Hall(const Hall &);
@@ -24,6 +23,7 @@ class Hall
 		int getHallNumber() const;
 		int getFreeSeats() const;
 		int getBookedSeats() const;
+		int getBoughtSeats() const;
 		bool getHallStatus() const;	
 		Vector<Seat> addSeats(int places);
 
@@ -46,14 +46,8 @@ class Hall
 			other.isHallBooked = false;
 
 			int places = other.numberOfRows*other.numberOfSeats;
-
-			Vector<Seat> newSeats = Vector<Seat>(places);
 			
-				for(int i = 0; i < places; i++)
-				{
-					Seat current = Seat(i+1, false);
-					newSeats.push_back(current);
-				}
+			Vector<Seat> newSeats = other.addSeats(places);
 
 			other.seats = newSeats;
 
@@ -163,6 +157,17 @@ int Hall::getBookedSeats() const
 	}
 
 	return booked;
+}
+
+int Hall::getBoughtSeats() const
+{
+	int bought = 0;
+	for(int i = 0; i < this->numberOfSeats*this->numberOfRows;i++)
+	{
+		if(this->seats[i].isSeatStatBought()) bought++;
+	}
+
+	return bought;
 }
 
 bool Hall::getHallStatus() const

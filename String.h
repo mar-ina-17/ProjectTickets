@@ -28,7 +28,16 @@ class String
 		char operator[](size_t i) const;
 		char& operator[](size_t i);
 
-		
+		friend std::istream& getline(std::istream& in, String&other, char delim)
+		{
+			size_t i = 0;
+			while(other.data[i] != delim)
+			{
+				in>>other.data[i];
+				i++;
+			}
+			return in;
+		}
 
         friend std::istream& operator>>(std::istream& in, String&other)
         {   
@@ -66,11 +75,11 @@ class String
 
 		friend std::ifstream& operator>>(std::ifstream&inf, String&other)
 		{	
-			inf.ignore();	
 			inf.getline(other.data, 1024);	
 			other.size = strlen(other.data);							
 			return inf;
 		}
+
 };
 
 String::String()
@@ -167,6 +176,5 @@ char& String::operator[](size_t index)
 {
     return this->data[index];
 }
-
 
 #endif

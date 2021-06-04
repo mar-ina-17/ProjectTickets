@@ -10,8 +10,6 @@ class Seat
 		bool isSeatBooked;
 		bool isSeatBought;
 		
-		void setSeatNumber(int num);//private
-
 	public:
 		Seat();
 		Seat(int num, bool status);
@@ -46,14 +44,14 @@ class Seat
 
 		friend std::ofstream& operator<<(std::ofstream& of, Seat &other)
 		{
-			String a = String("Seat number: ");
-			of<<a<<other.seatNumber<<", Is it booked? - "<<other.isSeatBooked<<", Is it bought? - "<<other.isSeatBought;
+			of<<"Seat number: "<<other.seatNumber<<", Is it booked? - "<<other.isSeatBooked<<", Is it bought? - "<<other.isSeatBought;
 			return of;
 		}
 
 		friend std::ifstream& operator>>(std::ifstream&inf, Seat&other)
 		{
-			inf>>other.seatNumber;	
+			String a = String("Seat number: ");
+			inf>>a>>other.seatNumber;	
 
 			return inf;
 		}
@@ -90,11 +88,6 @@ bool Seat::isSeatStatBooked() const
 	return this->isSeatBooked;
 }
 
-void Seat::setSeatNumber(int num)
-{
-	this->seatNumber = num;
-}
-
 void Seat::bookSeat()
 {
 	this->isSeatBooked = true;
@@ -114,7 +107,6 @@ void Seat::buySeat()
 {
 	this->isSeatBooked = true;
 	this->isSeatBought = true;
-	//this->code = 10101;
 }
 
 void Seat::print() const
