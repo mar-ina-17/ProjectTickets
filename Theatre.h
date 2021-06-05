@@ -56,6 +56,15 @@ public:
         out<<"Halls : "<<other.halls;
         return out;
     }
+
+	friend std::ofstream &operator<<(std::ofstream &of, const Theatre &other)
+    {
+        of << "Plays : " << std::endl;
+        of << other.plays;
+        std::cout << std::endl;
+        of<<"Halls : "<<other.halls;
+        return of;
+    }
 };
 
 size_t Theatre::getPlaysSize() const
@@ -129,9 +138,11 @@ void Theatre::print()
  //-------------------------------------------------------------------------------------------
 
  void Theatre::inputName()
- {
+ {	
+	 String name1;
 	 std::cout<<"Input name of play:";
-	 std::cin>>name;
+	 std::cin>>name1;
+
  }
 
 void Theatre::inputDate()
@@ -154,7 +165,7 @@ void Theatre::inputSeat()
 
 void Theatre::isFailed(bool is)
 {
-	if(!is) std::cout<<"ERROR: Operation Failed.";
+	if(!is) std::cout<<"ERROR: Operation Failed."<<std::endl;
 	this->callMenu();
 }
 
@@ -186,13 +197,13 @@ const void Theatre::freeSeats()
 	inputName();
 
     bool found = false;
-
+	std::cout<<name;
     for (size_t i = 0; i < this->plays.getSize(); i++)
     {
         if (this->plays[i].getPlayDate() == date && this->plays[i].getPlayName() == name)
         {
             found = true;
-            std::cout << "Number of free seats: " << this->plays[i].getPlayHall().getFreeSeats();
+            std::cout << "Number of free seats: " << this->plays[i].getPlayHall().getFreeSeats()<<std::endl;
         }
     }
 

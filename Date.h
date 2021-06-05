@@ -16,6 +16,8 @@ class Date
         Date(size_t day, size_t month, size_t year);
         Date(const Date&);
 
+		bool isInputValid();
+
         bool operator==(const Date&);
 		bool operator>=(const Date&);
 		bool operator<(const Date& other);
@@ -24,64 +26,15 @@ class Date
         friend std::istream& operator>>(std::istream&in, Date&other)
         {
             char delimiter;
-			in>>other.year;
-            in>>delimiter;
-            in>>other.month;
-            in>>delimiter;
-            in>>other.day;
+			in>>other.year>>delimiter>>other.month>>delimiter>>other.day;
 
-            if(other.day <= 0 || other.day > 31)
-            {
-                std::cout<<"Please, correct the day: ";
-                in>>other.day;
-            }
+            if(!(other.isInputValid())) 
+			{
+				std::cout<<"Correct the date: ";
+				return (in >> other);;
+			}
 
-            if(other.month <= 0 || other.month > 12)
-            {
-                std::cout<<"Please, correct the month: ";
-                in>>other.month;
-            }
-            
-            if(other.year == 0 || other.year < 2021)
-            {
-                std::cout <<"Please, correct the year: ";
-                in>>other.year;
-            }
-
-            if(other.month == 4 || other.month == 6 || other.month == 9 || other.month == 11)  
-            {
-                if(other.day < 0 || other.day > 30)
-                {
-                    std::cout <<"Invalid date, please, change date. "<<std::endl;
-                    return (in >> other);
-                }
-            }
-
-            if (other.month == 2)
-            {
-                if((other.year % 4 == 0) && (other.year % 100 == 0) && (other.year % 400 == 0) && (other.day < 0 || other.day > 29))//proveri v google
-                {
-                    std::cout <<"Invalid date, please, change date. "<<std::endl;
-                    return (in >> other);
-                }
-                if((other.year % 4 != 0) && (other.day < 0 || other.day > 28))
-                {
-                    std::cout <<"Invalid date, please, change date. "<<std::endl;
-                    return (in >> other);
-                }
-            }
-
-            else
-            {
-                if(other.day < 0 || other.day > 31)
-                {
-                    std::cout <<"Invalid date, please, change date. "<<std::endl;
-                    return (in >> other);
-                }
-            }
-
-            return in;
-
+			return in;
         }
 
         friend std::ostream& operator<<(std::ostream& out, const Date&other)
@@ -122,6 +75,53 @@ Date::Date(const Date& other)
     this->day = other.day;
     this->month = other.month;
     this->year = other.year;
+}
+
+bool Date::isInputValid()
+{
+	if(this->day <= 0 || this->day > 31)
+            {
+                return false;
+            }
+
+            if(this->month <= 0 || this->month > 12)
+            {
+                return false;
+            }
+            
+            if(this->year == 0 || this->year < 2021)
+            {
+                return false;
+            }
+
+            if(this->month == 4 || this->month == 6 || this->month == 9 || this->month == 11)  
+            {
+                if(this->day < 0 || this->day > 30)
+                {
+                    return false;
+                }
+            }
+
+            if (this->month == 2)
+            {
+                if((this->year % 4 == 0) && (this->year % 100 == 0) && (this->year % 400 == 0) && (this->day < 0 || this->day > 29))
+                {
+                   return false;
+                }
+                if((this->year % 4 != 0) && (this->day < 0 || this->day > 28))
+                {
+                    return false;
+                }
+            }
+
+            else
+            {
+                if(this->day < 0 || this->day > 31)
+                {
+                    return false;
+                }
+            }
+	return true;
 }
 
 bool Date::operator==(const Date& other)

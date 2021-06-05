@@ -68,6 +68,19 @@ class Hall
 			return out;
 		}
 
+		friend std::ofstream &operator<<(std::ofstream &of, const Hall &other)
+		{
+			of << "Hall number: "<<other.hallNumber<<std::endl;
+			of << "Is hall booked: "<<std::boolalpha<<other.getHallStatus()<<std::endl;
+			
+			for(int i = 0; i < other.numberOfSeats*other.numberOfRows; i++)
+			{
+				of<<other.seats[i];
+			}
+			
+		
+			return of;
+		}
 
 };
 
@@ -150,13 +163,7 @@ int Hall::getFreeSeats() const
 
 int Hall::getBookedSeats() const
 {
-	int booked = 0;
-	for(int i = 0; i < this->numberOfSeats*this->numberOfRows;i++)
-	{
-		if(this->seats[i].isSeatStatBooked() && !(this->seats[i].isSeatStatBought())) booked++;
-	}
-
-	return booked;
+	return (this->numberOfRows*this->numberOfSeats - getFreeSeats());
 }
 
 int Hall::getBoughtSeats() const
@@ -202,19 +209,8 @@ void Hall::bookSeatInHall(int place)
 			this->seats[place-1].bookSeat();
 			this->isHallBooked = true;
 		}
-		else
-		{
-			int pl;
-			std::cout<<"Seat is already booked or bought, so it can't be booked again. Try again by selecting another seat or exit booking (press '0'): "<<std::endl;
-			std::cin>>pl;
-			if(pl == 0) exit(0);
-			bookSeatInHall(pl);
-		}
 	}
-	else
-	{
-		std::cout << "No such seat found."<<std::endl;
-	}
+	else std::cout << "No such seat found."<<std::endl;
 }
 
 void Hall::unbookSeatInHall(int place)
@@ -225,18 +221,10 @@ void Hall::unbookSeatInHall(int place)
 		{
 			this->seats[place-1].unbookSeat();
 		}
-		else
-		{
-			std::cout<<"Seat is already unbooked or it is bought, so it can't be unbooked."<<std::endl;
-		}
+		else std::cout<<"Seat is already unbooked or it is bought, so it can't be unbooked."<<std::endl;
 	}
-	else
-	{
-		int pl;
-		std::cout << "No such seat found. Try again by selecting another seat: "<<std::endl;
-		std::cin>>pl;
-		unbookSeatInHall(pl);
-	}
+	
+	else std::cout << "No such seat found."<<std::endl;
 
 }
 
@@ -249,19 +237,11 @@ void Hall::buySeatInHall(int place)
 			this->seats[place-1].buySeat();
 			this->isHallBooked = true;
 		}
-		else
-		{
-			int pl;
-			std::cout<<"Seat is already booked or bought, so it can't be bought again. Try again by selecting another seat or exit booking (press '0'): "<<std::endl;
-			std::cin>>pl;
-			if(pl == 0) exit(0);
-			buySeatInHall(pl);
-		}
+		else std::cout<<"Seat is already booked or bought, so it can't be bought again. Try again by selecting another seat or exit booking (press '0'): "<<std::endl;
+
 	}
-	else
-	{
-		std::cout << "No such seat found."<<std::endl;
-	}
+	else std::cout << "No such seat found."<<std::endl;
+
 }
 void Hall::print() const
 {

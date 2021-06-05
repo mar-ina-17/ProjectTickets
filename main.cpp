@@ -9,5 +9,12 @@ int main()
 	te.generateHalls(4);
 	te.callMenu();
 
+	std::ofstream myfile ("file.txt");
+  if (myfile.is_open())
+  {
+    myfile << te;
+    myfile.close();
+  }
+
     return 0;
 }
