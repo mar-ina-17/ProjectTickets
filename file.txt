@@ -1,1 +1,11 @@
-Seat number: 123, Is it booked? - 1, Is it bought? - 1
+Play's date: 2021-1-1
+Play's name: Test play name
+Hall number: 1000
+Is hall booked: false
+Seat number: 1, Is it booked? - false, Is it bought? - false
+Seat number: 2, Is it booked? - false, Is it bought? - false
+Seat number: 3, Is it booked? - false, Is it bought? - false
+Seat number: 4, Is it booked? - false, Is it bought? - false
+Seat number: 5, Is it booked? - false, Is it bought? - false
+Seat number: 6, Is it booked? - false, Is it bought? - false
+

@@ -1,9 +1,6 @@
 #ifndef THEATRE_H
 #define THEATRE_H
 #include <iostream>
-#include <ostream>
-#include "String.h"
-#include "Vector.h"
 #include "Play.h"
 #include "Hall.h"
 
@@ -14,24 +11,42 @@ private:
     Vector<Hall> halls;
 
 public:
+	String name;
+	Date date;
+	int hallNumber;
+	int seatNumber;
+
+	void inputName();
+	void inputDate();
+	void inputHall();
+	void inputSeat();
+
+	void callMenu();
+	void isFailed(bool);
+	void displayHelp();
+
+
     Theatre();
     Theatre(const Theatre &);
     Theatre &operator=(const Theatre &);
 
-    void addHalls(const Vector<Hall> halls); //const
+    void addHalls(const Vector<Hall> halls);
     void generateHalls(const int numOfHalls);
-    void addPlays(const Vector<Play> plays); //const
+    void addPlays(const Vector<Play> plays); 
     void addPlay(Play &play);
 
     void addEvent();
-    void freeSeats() const;
-    void bookSeat(); //high-order fn 4 both
+    const void freeSeats();
+    void bookSeat();
     void unbookSeat();
     void buySeatForEvent();
     void bookedSeatsReport();
+	void boughtReport();
 
     size_t getPlaysSize() const;
     size_t getHallsSize() const;
+
+	void print();
 
     friend std::ostream &operator<<(std::ostream &out, const Theatre &other)
     {
@@ -55,8 +70,6 @@ size_t Theatre::getHallsSize() const
 
 Theatre::Theatre()
 {
-    //this->plays = Vector<Play>();
-   // this->halls = Vector<Hall>();
 	std::cout<<"Theatre constructed.";
 }
 
@@ -97,7 +110,7 @@ void Theatre::addPlay(Play &play)
     this->plays.push_back(play);
 }
 
-void Theatre::generateHalls(const int numOfHalls) //add parametri 4 numer and hallnum
+void Theatre::generateHalls(const int numOfHalls) 
 {
     for (int i = 0; i < numOfHalls; i++)
     {
@@ -106,17 +119,51 @@ void Theatre::generateHalls(const int numOfHalls) //add parametri 4 numer and ha
     }
 }
 
+void Theatre::print()
+{
+	std::cout << "Plays : " << std::endl;
+	std::cout << this->plays;
+	std::cout << std::endl;
+	std::cout<<"Halls : "<<this->halls;
+}
+ //-------------------------------------------------------------------------------------------
+
+ void Theatre::inputName()
+ {
+	 std::cout<<"Input name of play:";
+	 std::cin>>name;
+ }
+
+void Theatre::inputDate()
+ {
+	 std::cout<<"Input date:";
+	 std::cin>>date;
+ }
+
+void Theatre::inputHall()
+ {
+	 std::cout<<"Input number of hall:";
+	 std::cin>>hallNumber;
+ }
+
+void Theatre::inputSeat()
+{
+	std::cout<<"Input number of seat:";
+	std::cin>>seatNumber;
+}
+
+void Theatre::isFailed(bool is)
+{
+	if(!is) std::cout<<"ERROR: Operation Failed.";
+	this->callMenu();
+}
+
 void Theatre::addEvent()
 {
-    Date date = Date();
-    std::cin >> date;
-
-    String name = String();
-    std::cin >> name;
-
-    size_t hallNumber;
-    std::cin >> hallNumber;
-
+    inputDate();
+	inputHall();
+	inputName();
+	
     bool found = false;
 
     for (size_t i = 0, hallsSize = this->halls.getSize(); i < hallsSize; i++)
@@ -130,27 +177,16 @@ void Theatre::addEvent()
         }
     }
 
-    if (!found)
-    {
-        char c;
-        std::cout << "ERROR: Would you like to add another event in an existing hall or exit(y/n)?\n";
-        std::cin >> c;
-        if (c == 'y')
-            addEvent();
-        else
-            exit(0);
-    }
+    isFailed(found);
 }
 
-void Theatre::freeSeats() const
+const void Theatre::freeSeats()
 {
-    Date date = Date();
-    std::cin >> date;
-
-    String name = String();
-    std::cin >> name;
+   	inputDate();	
+	inputName();
 
     bool found = false;
+
     for (size_t i = 0; i < this->plays.getSize(); i++)
     {
         if (this->plays[i].getPlayDate() == date && this->plays[i].getPlayName() == name)
@@ -160,30 +196,18 @@ void Theatre::freeSeats() const
         }
     }
 
-    if (!found)
-    {
-        char c;
-        std::cout << "ERROR: Would you like to check the free seats for another show or exit(y/n)?\n";
-        std::cin >> c;
-        if (c == 'y')
-            freeSeats();
-        else
-            exit(0);
-    }
+ 	isFailed(found);
+
 }
 
 void Theatre::bookSeat()
 {
-    size_t seatNumber;
-    std::cin >> seatNumber;
-
-    Date date = Date();
-    std::cin >> date;
-
-    String name = String();
-    std::cin >> name;
+    inputSeat();
+	inputDate();
+	inputName();
 
     bool found = false;
+
     for (size_t i = 0; i < this->plays.getSize(); i++)
     {
         if (this->plays[i].getPlayDate() == date && this->plays[i].getPlayName() == name)
@@ -192,30 +216,19 @@ void Theatre::bookSeat()
             this->plays[i].getPlayHall().bookSeatInHall(seatNumber);
         }
     }
-    if (!found)
-    {
-        char c;
-        std::cout << "ERROR: Would you like to chose another seat or exit(y/n)?\n";
-        std::cin >> c;
-        if (c == 'y')
-            bookSeat();
-        else
-            exit(0);
-    }
+    
+	isFailed(found);
+
 }
 
 void Theatre::unbookSeat()
 {
-    size_t seatNumber;
-    std::cin >> seatNumber;
-
-    Date date = Date();
-    std::cin >> date;
-
-    String name = String();
-    std::cin >> name;
+    inputSeat();
+	inputDate();
+	inputName();
 
     bool found = false;
+
     for (size_t i = 0; i < this->plays.getSize(); i++)
     {
         if (this->plays[i].getPlayDate() == date && this->plays[i].getPlayName() == name)
@@ -224,30 +237,18 @@ void Theatre::unbookSeat()
             this->plays[i].getPlayHall().unbookSeatInHall(seatNumber);
         }
     }
-    if (!found)
-    {
-        char c;
-        std::cout << "ERROR: Would you like to chose another seat or exit(y/n)?\n";
-        std::cin >> c;
-        if (c == 'y')
-            unbookSeat();
-        else
-            exit(0);
-    }
+    
+	isFailed(found);
 }
 
 void Theatre::buySeatForEvent()
 {
-    size_t seatNumber;
-    std::cin >> seatNumber;
-
-    Date date = Date();
-    std::cin >> date;
-
-    String name = String();
-    std::cin >> name;
+    inputSeat();
+	inputDate();
+	inputName();
 
     bool found = false;
+
     for (size_t i = 0; i < this->plays.getSize(); i++)
     {
         if (this->plays[i].getPlayDate() == date && this->plays[i].getPlayName() == name)
@@ -256,22 +257,12 @@ void Theatre::buySeatForEvent()
             this->plays[i].getPlayHall().buySeatInHall(seatNumber);
         }
     }
-    if (!found)
-    {
-        char c;
-        std::cout << "ERROR: Would you like to buy another tcket or exit(y/n)?\n";
-        std::cin >> c;
-        if (c == 'y')
-            buySeatForEvent();
-        else
-            exit(0);
-    }
+	
+	isFailed(found);
 }
 
 void Theatre::bookedSeatsReport()
 {
-    Date date = Date();
-    String name = String();
 
     int choice = 0;
     std::cout << "Please, type 1, if u want to search by date, 2- name, 3- date and name:";
@@ -279,17 +270,12 @@ void Theatre::bookedSeatsReport()
 
     switch (choice)
     {
-    case 1:
-        std::cin >> date;
-        break;
-
-    case 2:
-        std::cin >> name;
-        break;
-
-    case 3:
-        std::cin >> date >> name;
-        break;
+		case 1: inputDate();  break;
+		case 2: inputName();  break;
+		case 3:	
+			inputDate();
+			inputName();
+					break;
     }
 
     for (size_t i = 0; i < this->plays.getSize(); i++)
@@ -324,5 +310,108 @@ void Theatre::bookedSeatsReport()
             }
         }
     }
+}
+
+void Theatre::boughtReport()
+{
+	Date date2;
+	inputDate();
+	std::cout<<"to date: ";
+	std::cin>>date2;
+
+	if(date < date2) return;
+
+	inputHall();
+	bool found = false;
+	for (size_t i = 0; i < this->plays.getSize(); i++)
+    {
+        if (this->plays[i].getPlayDate() >= date && this->plays[i].getPlayDate() < date2 && this->plays[i].getPlayHall().getHallNumber() == hallNumber)
+        {
+            found = true;
+            std::cout<<"For date: "<< this->plays[i].getPlayDate()<<"this hall has :"<< this->plays[i].getPlayHall().getBoughtSeats()<<std::endl;;
+        }
+    }
+	
+	isFailed(found);
+}
+
+void Theatre::displayHelp()
+{
+    std::cout <<"0 - exit program" << std::endl;
+    std::cout <<"1 - addevent <date> <hall> <name> -- Adds a new event of date <date> named <name> in the <hall> hall.\n";
+    std::cout <<"2 - freeseats <date> <name> -- Displays a free space for a performance named <name> on <date> (unsold and unsaved tickets).\n";
+    std::cout <<"3 - book <seat> <date> <name> -- Saves a show ticket named <name> to <date> on line <row> and place <seat>.\n";
+    std::cout <<"4 - unbook <seat> <date> <name> -- Cancel a reservation for a show named <name> on <date> on line <row> and place <seat>.\n";
+    std::cout <<"5 - buy <seat> <date> <name> -- Purchases a ticket for a show named <name> on <date> at <seat>.\n";
+    std::cout <<"6 - bookings [<date>] [<name>] -- Displays saved but unpaid (unpurchased) performance tickets named <name> on <date>. If <name> is omitted, displays information about all performances on the given date. If <date> is omitted, displays information about all dates.\n";
+	std::cout <<"7 - report <from> <to> [<hall>] -- Displays a reference for purchasing tickets from date <from> to date <to> in hall <hall>, displaying all presented performances in the hall and for each individual presentation the quantity of sold tickets is also displayed.\n";
+    std::cout <<"8 - help\n";
+	std::cout <<"9 - print theatre\n";
+
+}
+
+void Theatre::callMenu()
+{
+	
+	size_t command;
+	std::cout<<"Input command: ";
+	std::cin>>command;
+    
+        if(command == 1)
+        {
+            std::cout <<"You can now add an event:\n";
+            addEvent();
+           	callMenu();
+        }
+
+        if(command == 2)
+        {
+            std::cout <<"You can now check for free seats at an event:\n";
+            freeSeats();
+            callMenu();
+        }
+
+        if(command == 3)
+        {
+            std::cout <<"You can now book a seat at an event:\n";
+            bookSeat();            
+          	callMenu();
+        } 
+
+        if(command == 4) 
+        {
+            std::cout <<"You can now unbook a seat at an event:\n";
+            unbookSeat();
+            callMenu();
+        }
+
+        if(command == 5) 
+        {
+            std::cout <<"You can now buy a seat at an event:\n";
+           	buySeatForEvent();
+            callMenu();
+        }
+        if(command == 6)
+        {
+            std::cout <<"You can now see the amount of booked seats at an event:\n";
+            bookedSeatsReport();
+            callMenu();
+        } 
+        if(command == 7)
+        {
+            std::cout <<"You can now see the amount of booked seats at an event:\n";
+            boughtReport();
+            callMenu();
+        } 
+		if(command == 8)
+		{
+			displayHelp();
+			callMenu();
+		}
+		if(command == 9)
+		{
+			print();
+			callMenu();
+		}
 }
 #endif
