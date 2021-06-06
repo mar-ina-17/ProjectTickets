@@ -3,6 +3,7 @@
 #include <iostream>
 #include <fstream>
 #include "helpers.cpp"
+
 class String
 {
     private:
@@ -21,37 +22,24 @@ class String
 		size_t getSize() const;
 
 		String& concat(const String& other);
-		int compare(const String& other);//const define operator>=& > operator=< & <
 
-		bool operator==(const String&other) const;//const
-		bool operator!=(const String&other) const;//const
-		char operator[](size_t i) const;
+		bool operator==(const String&other) const;
+		bool operator!=(const String&other) const;
+		const char& operator[](size_t i) const;
 		char& operator[](size_t i);
 
-		friend std::istream& getline(std::istream& in, String&other, char delim)
-		{
-			size_t i = 0;
-			while(other.data[i] != delim)
-			{
-				in>>other.data[i];
-				i++;
-			}
-			return in;
-		}
-
+		//! an overloaded operator>> for console input String
         friend std::istream& operator>>(std::istream& in, String&other)
         {   
-			char*tmp;
-			in.ignore();
-			in.getline(tmp,1024);
-			
-			other.size = strlen(tmp);
-			other.data = emptyAndCreateString(other.data, other.size);
-			other.data = strcpy(other.data, tmp);
-			
+			  	char* c = new char[1000];
+				in >> c;
+				other = String(c);
+				delete[] c;
+
 			return in;
         }
 
+		//! an overloaded operator<< for console output String
         friend std::ostream& operator<<(std::ostream& out, const String& other) 
         {
 			if(other.data == nullptr)
@@ -67,12 +55,14 @@ class String
 		    return out;
 	    }
 
+		//! an overloaded operator<< for file output String
 		friend std::ofstream& operator<<(std::ofstream& of, String &other)
 		{
 			of<<other.data;
 			return of;
 		}
 
+		//! an overloaded operator>> for file input String
 		friend std::ifstream& operator>>(std::ifstream&inf, String&other)
 		{	
 			inf.getline(other.data, 1024);	
@@ -137,11 +127,6 @@ String& String::concat(const String& other)
     return *this;
 }
 
-int String::compare(const String& other)
-{ 
-    return strcmp(this->data, other.data);
-}
-
 bool String::operator==(const String& other) const
 {
     bool result = false;
@@ -167,7 +152,7 @@ size_t String::getSize() const
     return this->size;
 }
 
-char String::operator[](size_t index) const
+const char& String::operator[](size_t index) const
 {
     return this->data[index]; 
 }

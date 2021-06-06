@@ -25,6 +25,7 @@ class Hall
 		int getBookedSeats() const;
 		int getBoughtSeats() const;
 		bool getHallStatus() const;	
+		Seat& getSeat(int n);
 		Vector<Seat> addSeats(int places);
 
 		void setHallNumber(int number);
@@ -34,6 +35,7 @@ class Hall
 
 		void print() const;
 
+		//! overloaded operator>> for Hall
 		friend std::istream& operator>>(std::istream& in, Hall &other)
 		{
 			std::cout<<"Insert hall number: ";
@@ -44,7 +46,9 @@ class Hall
 			in>>other.numberOfSeats;
 
 			other.isHallBooked = false;
-
+	
+			//! after the number of rows and number of seats per row are inserted 
+			//! the  total number of places is used to generate a vector of seats
 			int places = other.numberOfRows*other.numberOfSeats;
 			
 			Vector<Seat> newSeats = other.addSeats(places);
@@ -53,7 +57,8 @@ class Hall
 
 			return in;
 		}
-
+		
+		//! overloaded operator<< for Hall, printing a Hall on the console
 		friend std::ostream &operator<<(std::ostream &out, const Hall &other)
 		{
 			out << "Hall number: "<<other.hallNumber<<std::endl;
@@ -68,6 +73,7 @@ class Hall
 			return out;
 		}
 
+		//! overloaded operator<< for Hall, writin a Hall on a file
 		friend std::ofstream &operator<<(std::ofstream &of, const Hall &other)
 		{
 			of << "Hall number: "<<other.hallNumber<<std::endl;
@@ -132,6 +138,7 @@ Hall& Hall::operator=(const Hall& other)
 	return *this;
 }
 
+//! a method that generates an amount of seats in the Hall and returns a vector
 Vector<Seat> Hall::addSeats(int places)
 {
 	Vector<Seat>newSeats = Vector<Seat>(places);
@@ -143,6 +150,11 @@ Vector<Seat> Hall::addSeats(int places)
 		}
 
 	return newSeats;
+}
+
+Seat& Hall::getSeat(int n)
+{
+	return this->seats[n-1];
 }
 
 int Hall::getHallNumber() const
@@ -200,19 +212,25 @@ void Hall::setHallNumber(int number)
 	this->hallNumber = number;
 }
 
+//! this method books a seat in the hall by checking previously for its status 
+//! and returning a message if such seat is not found
 void Hall::bookSeatInHall(int place)
 {
 	if(place > 0 && place <= this->numberOfSeats*this->numberOfRows)
 	{
 		if(!this->seats[place-1].isSeatStatBooked())
 		{
-			this->seats[place-1].bookSeat();
+			this->seats[place-1].bookSeat();			
 			this->isHallBooked = true;
 		}
 	}
+	
 	else std::cout << "No such seat found."<<std::endl;
 }
 
+//! this method unbooks a seat in the hall by checking previously for its status
+//! if it is bought the operation can't be executed
+//! and returning a message if such seat is not found
 void Hall::unbookSeatInHall(int place)
 {
 	if(place > 0 && place <= this->numberOfSeats*this->numberOfRows)
@@ -225,14 +243,16 @@ void Hall::unbookSeatInHall(int place)
 	}
 	
 	else std::cout << "No such seat found."<<std::endl;
-
 }
 
+//! this method buys a seat in the hall by checking previously for its status
+//! if it is bought already or it's booked the operation can't be executed
+//! and returning a message if such seat is not found
 void Hall::buySeatInHall(int place)
 {
 	if(place > 0 && place <= this->numberOfSeats*this->numberOfRows)
 	{
-		if(!this->seats[place-1].isSeatStatBooked())
+		if(!this->seats[place-1].isSeatStatBooked() && !(this->seats[place-1].isSeatStatBought()))
 		{
 			this->seats[place-1].buySeat();
 			this->isHallBooked = true;
@@ -240,9 +260,10 @@ void Hall::buySeatInHall(int place)
 		else std::cout<<"Seat is already booked or bought, so it can't be bought again. Try again by selecting another seat or exit booking (press '0'): "<<std::endl;
 
 	}
-	else std::cout << "No such seat found."<<std::endl;
 
+	else std::cout << "No such seat found."<<std::endl;
 }
+
 void Hall::print() const
 {
 	std::cout << "Hall number: "<<this->hallNumber<<std::endl;

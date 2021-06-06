@@ -3,6 +3,7 @@
 #include <iostream>
 #include <fstream>
 #include "String.h"
+
 class Seat
 {
 	private:
@@ -26,6 +27,7 @@ class Seat
 
 		void print() const;
 
+		//! overloaded operator>> for Seat
 		friend std::istream& operator>>(std::istream&in, Seat& other)
 		{
 			std::cout <<"Set seat number: ";
@@ -36,25 +38,20 @@ class Seat
 			return in;
 		}
 
+		//! operator<< outputs the Seat data in the console
 		friend std::ostream& operator<<(std::ostream&out, const Seat&other)
 		{
 			out <<"Seat number: "<<other.seatNumber<<", Is it booked? - "<<std::boolalpha<<other.isSeatBooked<<", Is it bought? - "<<std::boolalpha<<other.isSeatBought<<std::endl;
 			return out;
 		}
-
+		
+		//! declaration of ofstream opertator<<
 		friend std::ofstream& operator<<(std::ofstream& of, Seat &other)
 		{
 			of<<"Seat number: "<<other.seatNumber<<", Is it booked? - "<<other.isSeatBooked<<", Is it bought? - "<<other.isSeatBought;
 			return of;
 		}
 
-		friend std::ifstream& operator>>(std::ifstream&inf, Seat&other)
-		{
-			String a = String("Seat number: ");
-			inf>>a>>other.seatNumber;	
-
-			return inf;
-		}
 };
 
 Seat::Seat()
@@ -103,6 +100,7 @@ bool Seat::isSeatStatBought() const
 	return this->isSeatBought;
 }
 
+//! when a seat is bought both the booked and bought status become true
 void Seat::buySeat()
 {
 	this->isSeatBooked = true;

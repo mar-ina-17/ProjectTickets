@@ -2,6 +2,9 @@
 #define VECTOR_H
 #include <iostream>
 
+//! this Vector.h is influenced by the implementation of the std::vector at the exercises 
+//! credits to: Dimitar Sotirov and Daniel Radev, and also 3rd group in general
+
 template <class T>
 class Vector
 {
@@ -28,9 +31,6 @@ public:
 	size_t getCapacity() const;
 
 	void push_back(T);//& change
-	void pop_back();
-	void popByIndex(size_t);
-	void popByData(T);//& change
 
 	bool isEmpty () const;
 
@@ -157,41 +157,6 @@ void Vector<T>::push_back(T element) { //&
 	this->arr[this->size - 1] = element;
 }
 
-template<class T>
-void Vector<T>::pop_back() {
-	if(this->size == 0) {
-		std::cerr<<"The vector is empty"<<std::endl;
-		return;
-	}
-
-	T* newBuffer = new T[size - 1];
-    for (size_t i = 0; i < size - 1; i++) {
-        newBuffer[i] = this->arr[i];
-    }
-    erase();
-    --size;
-    this->arr = newBuffer;
-}
-
-
-template<class T>
-void Vector<T>::popByIndex(size_t index) {
-    if (isEmpty()) return;
-	for (size_t i = index; i < this->size - 1; ++i) {
-		this->arr[i] = this->arr[i + 1];
-	}
-	this->size--;
-} 
-
-template<class T>
-void Vector<T>::popByData(T element){
-    for (size_t i = 0; i < this->size; ++i) {
-        if(this->arr[i] == element) {
-            this->popByIndex(i);
-            return;
-        }
-    }
-}
 
 template <class T>
 bool Vector<T>::isEmpty() const {

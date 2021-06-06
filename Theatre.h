@@ -40,6 +40,7 @@ public:
     void bookSeat();
     void unbookSeat();
     void buySeatForEvent();
+	void returnBookedSeatsHelper(int);
     void bookedSeatsReport();
 	void boughtReport();
 
@@ -48,6 +49,7 @@ public:
 
 	void print();
 
+	//! overloaded operator<< to print a Theatre to the console
     friend std::ostream &operator<<(std::ostream &out, const Theatre &other)
     {
         out << "Plays : " << std::endl;
@@ -57,6 +59,7 @@ public:
         return out;
     }
 
+	//! overloaded operator<< to print a Theatre to a file
 	friend std::ofstream &operator<<(std::ofstream &of, const Theatre &other)
     {
         of << "Plays : " << std::endl;
@@ -98,6 +101,7 @@ Theatre &Theatre::operator=(const Theatre &other)
     return *this;
 }
 
+//! a method that adds a vector of halls to the current this->halls 
 void Theatre::addHalls(Vector<Hall> halls)
 {
     for (int i = 0; i < halls.getSize(); i++)
@@ -106,6 +110,7 @@ void Theatre::addHalls(Vector<Hall> halls)
     }
 }
 
+//! a method that adds a vector of plays to the current this->plays 
 void Theatre::addPlays(Vector<Play> plays)
 {
     for (int i = 0; i < plays.getSize(); i++)
@@ -114,11 +119,13 @@ void Theatre::addPlays(Vector<Play> plays)
     }
 }
 
+//! a method that adds a single Play to the vector
 void Theatre::addPlay(Play &play)
 {
     this->plays.push_back(play);
 }
 
+//! a method that generates a given amount of halls in the Theatre 
 void Theatre::generateHalls(const int numOfHalls) 
 {
     for (int i = 0; i < numOfHalls; i++)
@@ -135,14 +142,14 @@ void Theatre::print()
 	std::cout << std::endl;
 	std::cout<<"Halls : "<<this->halls;
 }
- //-------------------------------------------------------------------------------------------
+
+//! helpers for the users input as for the 
+//! name of the play, date, hall number and seat number
 
  void Theatre::inputName()
- {	
-	 String name1;
+ {		
 	 std::cout<<"Input name of play:";
-	 std::cin>>name1;
-
+	 std::cin>>name;
  }
 
 void Theatre::inputDate()
@@ -163,12 +170,26 @@ void Theatre::inputSeat()
 	std::cin>>seatNumber;
 }
 
-void Theatre::isFailed(bool is)
+//! helper for one of the methods as this piece of code happens to be repeated
+void Theatre::returnBookedSeatsHelper(int i)
 {
-	if(!is) std::cout<<"ERROR: Operation Failed."<<std::endl;
-	this->callMenu();
+	 std::cout << this->plays[i].getPlayHall();
+	std::cout << "Total booked, but not bought seats for this play: " << this->plays[i].getPlayHall().getBookedSeats() << std::endl;
+	std::cout << "----------------------------------------------------------------------------------------------------------------" << std::endl;
 }
 
+//! checks if the operation is not executed successfuly and calls the menu again
+void Theatre::isFailed(bool is)
+{
+	if(!is) std::cout<<"ERROR: Operation Failed.";
+	callMenu();
+}
+
+//! FUNCTIONALITIES OF THE PROGRAM : 
+
+//! adds an event to the Theatre, by getting the users input for
+//! for name of the event(Play), date and hall and then 
+//! creates a new Play object with the given data and pushes it into the vector with plays
 void Theatre::addEvent()
 {
     inputDate();
@@ -191,6 +212,10 @@ void Theatre::addEvent()
     isFailed(found);
 }
 
+
+//! checks for free seats at a Play, by getting the users input for
+//! for name of the event(Play), date then 
+//! gets the Hall object of the Play with the same attributes and checks for the free seats there 
 const void Theatre::freeSeats()
 {
    	inputDate();	
@@ -211,6 +236,9 @@ const void Theatre::freeSeats()
 
 }
 
+//! books a Seat at an Event, by getting the users input for
+//! for name of the event(Play), date and seat number and then 
+//! gets the Hall object of the Play with the same attributes and books the seat there 
 void Theatre::bookSeat()
 {
     inputSeat();
@@ -232,6 +260,9 @@ void Theatre::bookSeat()
 
 }
 
+//! unbooks a Seat at an Event, by getting the users input for
+//! for name of the event(Play), date and seat number and then 
+//! gets the Hall object of the Play with the same attributes and unbooks the seat there 
 void Theatre::unbookSeat()
 {
     inputSeat();
@@ -252,6 +283,9 @@ void Theatre::unbookSeat()
 	isFailed(found);
 }
 
+//! buys a Seat at an Event, by getting the users input for
+//! for name of the event(Play), date and seat number and then 
+//! gets the Hall object of the Play with the same attributes and buys the seat there 
 void Theatre::buySeatForEvent()
 {
     inputSeat();
@@ -272,6 +306,10 @@ void Theatre::buySeatForEvent()
 	isFailed(found);
 }
 
+
+//! cheks for the amount of booked seats at an event by letting the user choose 
+//! whether he is going to search them by date or name or both
+//! then the booked but not bought seats are displayed
 void Theatre::bookedSeatsReport()
 {
 
@@ -284,45 +322,31 @@ void Theatre::bookedSeatsReport()
 		case 1: inputDate();  break;
 		case 2: inputName();  break;
 		case 3:	
-			inputDate();
-			inputName();
-					break;
+				inputDate();
+				inputName();
+				break;
     }
 
     for (size_t i = 0; i < this->plays.getSize(); i++)
     {
         if (choice == 3)
         {
-            if (this->plays[i].getPlayName() == name && this->plays[i].getPlayDate() == date)
-            {
-                std::cout << this->plays[i].getPlayHall();
-                std::cout << "Total booked, but not bought seats for this play: " << this->plays[i].getPlayHall().getBookedSeats() << std::endl;
-                std::cout << "----------------------------------------------------------------------------------------------------------------" << std::endl;
-            }
+            if (this->plays[i].getPlayName() == name && this->plays[i].getPlayDate() == date)  returnBookedSeatsHelper(i);
         }
 
         if (choice == 1)
         {
-            if (this->plays[i].getPlayDate() == date)
-            {
-                std::cout << this->plays[i].getPlayHall();
-                std::cout << "Total booked, but not bought seats for this play: " << this->plays[i].getPlayHall().getBookedSeats() << std::endl;
-                std::cout << "----------------------------------------------------------------------------------------------------------------" << std::endl;
-            }
-        }
+            if (this->plays[i].getPlayDate() == date) returnBookedSeatsHelper(i);
+		}
 
         if (choice == 2)
         {
-            if (this->plays[i].getPlayName() == name)
-            {
-                std::cout << this->plays[i].getPlayHall();
-                std::cout << "Total booked, but not bought seats for this play: " << this->plays[i].getPlayHall().getBookedSeats() << std::endl;
-                std::cout << "----------------------------------------------------------------------------------------------------------------" << std::endl;
-            }
+            if (this->plays[i].getPlayName() == name)  returnBookedSeatsHelper(i);
         }
     }
 }
 
+//! reports the total tickets bought for a period of time <from> <to> Date 
 void Theatre::boughtReport()
 {
 	Date date2;
@@ -346,6 +370,7 @@ void Theatre::boughtReport()
 	isFailed(found);
 }
 
+//! this displays the help of the program in order to guide the user
 void Theatre::displayHelp()
 {
     std::cout <<"0 - exit program" << std::endl;
@@ -361,10 +386,11 @@ void Theatre::displayHelp()
 
 }
 
+//! that is the menu for the program that calls different functionalities depending on the users command
 void Theatre::callMenu()
 {
 	
-	size_t command;
+	int command;
 	std::cout<<"Input command: ";
 	std::cin>>command;
     

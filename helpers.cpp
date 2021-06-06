@@ -2,6 +2,7 @@
 #define helpers
 #include <iostream>
 
+//! empty a char* and allocates new memory
 char * emptyAndCreateString(char * str, size_t len)
 {
     delete [] str;
@@ -16,6 +17,7 @@ char * emptyAndCreateString(char * str, size_t len)
     return str;
 }
 
+//! determines the size of a string
 size_t strlen ( const char * str )
 {
     size_t i = 0;
@@ -28,7 +30,8 @@ size_t strlen ( const char * str )
     return i;
 }
 
-
+//! makes a copy of one const char* array to another char* array 
+//! but first call the emptyAndCreateString function to allocate memory for the new string
 char * strcpy ( char * destination, const char * source )
 {
     size_t len = strlen ( source );
@@ -42,6 +45,8 @@ char * strcpy ( char * destination, const char * source )
     return destination;
 }
 
+//! concatenates two strings into one but first makes a new tmp char* parameter
+//! to hold ine of the strings so it can resize and then copy ist data back along with th eother string 
 char * strcat ( char * destination, const char * source )
 {
     int j = 0;
@@ -58,24 +63,5 @@ char * strcat ( char * destination, const char * source )
         }
 
     return destination;
-}
-
-int strcmp ( const char * str1, const char * str2 )
-{
-    int i = 0, result = 0;
-    while (str1[i] || str2[i])
-    {
-        if(str1[i] < str2[i])
-        {
-            result = -1;
-        }
-        else if(str1[i] > str2[i])
-        {
-            result = 1;
-        }
-       
-        i++;
-    }
-    return result;
 }
 #endif
